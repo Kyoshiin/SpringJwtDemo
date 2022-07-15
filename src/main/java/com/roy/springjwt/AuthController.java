@@ -4,7 +4,6 @@ import com.roy.springjwt.models.AuthenticationRequest;
 import com.roy.springjwt.models.AuthenticationResponse;
 import com.roy.springjwt.services.JwtUserDetailsService;
 import com.roy.springjwt.util.JwtUtil;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,9 +29,9 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil; // for gen auth token
 
-    @RequestMapping("/hello")
+    @RequestMapping("/check-access")
     public String hello() {
-        return "Hello World";
+        return "You have access to our portal!!";
     }
 
     @PostMapping(value = "/authenticate")
@@ -59,5 +58,4 @@ public class AuthController {
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));  // sending back d response
     }
-
 }

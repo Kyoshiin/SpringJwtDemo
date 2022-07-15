@@ -42,8 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwtToken = null;
-        
-        System.out.println("authHeader "+authHeader);
+
         // jwtToken in the form Bearer <token>
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwtToken = authHeader.substring(7);
@@ -56,7 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("JWT Token has expired");
             }
         } else {
-            logger.warn("JWT Token does not begin with Bearer String");
+            logger.info("JWT Token does not begin with Bearer String");
         }
 
         //user context doesn't already exists

@@ -1,6 +1,5 @@
 package com.roy.springjwt;
 
-
 import com.roy.springjwt.filters.JwtRequestFilter;
 import com.roy.springjwt.services.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +43,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/authenticate").permitAll()
                 // other req needs to be authd
                 .anyRequest().authenticated()
-//                // make sure we use stateless session; session won't be used to
-//                // store user's state.
+                // make sure we use stateless session; session won't be used to
+                // store user's state.
                 .and().exceptionHandling()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);// to stop Spring Security frm making sessions
@@ -54,6 +53,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); //call 1st filter before 2nd
     }
 
+//    @Bean //todo: implement hashing in ps creation too
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance(); // for not doing any hashing for incoming ps

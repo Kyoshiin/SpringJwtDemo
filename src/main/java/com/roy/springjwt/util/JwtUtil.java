@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -20,11 +19,10 @@ import java.util.function.Function;
  * class to abstract all jwt related stuff
  * create new jwt & pull up username via existing jwt
  */
-
 @Service
-public class JwtUtil implements Serializable {
+public class JwtUtil{
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5hs
+    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5hs in sec
 
     @Value("${jwt.secret}")
     private String secretKey;

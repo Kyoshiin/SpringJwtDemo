@@ -1,5 +1,8 @@
 package com.roy.springjwt.services;
 
+import com.roy.springjwt.models.UserModel;
+import com.roy.springjwt.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,14 +13,28 @@ import java.util.ArrayList;
 
 /**
  * Created by Roy on 14-07-2022
- * <p>
- * DAO_Class to store userDetails
  */
+
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        //usually return from database
-        return new User("foo", "foo", new ArrayList<>());
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        /* fetching user by userName, if user is null the throw exception, otherwise
+         * return user
+         */
+        UserModel userModel = userRepository.findByUserName(username);
+        if (userModel == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return new User(userModel.getUserName(), userModel.getPassword(), new ArrayList<>());
+
+        /*
+        or create a class extending UserDetails and return it
+        return new MyUserDeails(userModel);
+         */
     }
 }
